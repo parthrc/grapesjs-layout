@@ -1,49 +1,90 @@
 const CustomRow = (editor) => {
-  // isComponent
-
   editor.Components.addType("custom-row", {
     isComponent: (el) =>
       el.tagName === "DIV" && el.classList.contains("custom-row"),
-    // model definition
+
     model: {
       defaults: {
         tagName: "div",
         attributes: { class: "custom-row" },
         droppable: true,
         draggable: true,
-        // A row always starts with one column
         components: [
-          //   {
-          //     type: "text", // Adding a placeholder text component initially
-          //     content: "Drag components here",
-          //   },
+          {
+            type: "custom-column",
+          },
         ],
-        // Default styles
         style: {
+          display: "flex",
           padding: "10px",
           "background-color": "#e0f0ff",
           color: "#000000",
           border: "5px solid #0454a8",
           "border-radius": "5px",
           "font-size": "16px",
-          "min-height": "50px", // Ensure it has some height initially
+          "min-height": "50px",
         },
-        // custom methods
+      },
+
+      init() {
+        this.on("component:update", this.adjustColumnWidths);
+        // Listen to the component:add event to handle new components
+        this.listenTo(this.components(), "add", this.adjustColumnWidths);
+      },
+
+      adjustColumnWidths() {
+        console.log("adjustColumnWidths");
+        const columns = this.components();
+        const columnCount = columns.length;
+        console.log("Total columns", columns);
+
+        // Limit to a maximum of 4 columns
+        if (columnCount > 4) {
+          // Remove columns added after the 4th
+          for (let i = columnCount - 1; i >= 4; i--) {
+            columns.at(i).remove();
+          }
+        }
+
+        // Wrap any new components in columns
+        columns.each((column, index) => {
+          console.log("Each column=", column);
+          const currentStyle = column.getStyle();
+          if (index < 4) {
+            column.setStyle({
+              ...currentStyle,
+              width: `${100 / Math.min(columnCount, 4)}%`,
+            });
+
+            // Ensure that any direct children are wrapped in a custom-column
+            const childComponents = column.components();
+            childComponents.each((child) => {
+              //   console.log("Child type=", child.get("type"));
+              if (child.get("type") !== "custom-column") {
+                column.append({
+                  type: "custom-column",
+                  components: [child.clone()],
+                });
+                child.remove();
+              }
+            });
+          }
+        });
       },
     },
-    // view definition
-    // View definition (optional)
+
     view: {
       onRender() {
         console.log("CustomRow rendered");
       },
     },
   });
-  // Add the custom component to the Block Manager
+
   editor.BlockManager.add("custom-row", {
     label: "Custom Row",
     category: "Layout",
     content: { type: "custom-row" },
   });
 };
+
 export default CustomRow;

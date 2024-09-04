@@ -20,13 +20,14 @@ const CustomColumn = (editor) => {
         ],
         // Default styles
         style: {
+          width: "100%",
           padding: "10px",
           "background-color": "#f0aeae",
           color: "#000000",
           border: "5px solid #a80404",
           "border-radius": "5px",
           "font-size": "16px",
-          "min-height": "50px", // Ensure it has some height initially
+          "min-height": "50px",
         },
         // custom methods
       },

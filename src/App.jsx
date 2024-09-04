@@ -7,6 +7,7 @@ import CustomColumn from "./grapesjs/CustomComponents/LayoutComponents/CustomCol
 function App() {
   const onEditor = (editor) => {
     console.log("Editor loaded", { editor });
+    if (editor) editor.addComponents({ type: "custom-row" });
   };
 
   return (
