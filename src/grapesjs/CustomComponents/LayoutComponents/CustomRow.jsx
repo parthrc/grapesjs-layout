@@ -27,9 +27,9 @@ const CustomRow = (editor) => {
       },
 
       init() {
-        this.on("component:update", this.adjustColumnWidths);
-        // Listen to the component:add event to handle new components
-        this.listenTo(this.components(), "add", this.adjustColumnWidths);
+        // this.on("component:update", this.adjustColumnWidths);
+        // // Listen to the component:add event to handle new components
+        // this.listenTo(this.components(), "add", this.adjustColumnWidths);
       },
 
       adjustColumnWidths() {
