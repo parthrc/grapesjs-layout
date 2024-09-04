@@ -1,17 +1,17 @@
-const CustomRow = (editor) => {
+const CustomColumn = (editor) => {
   // isComponent
 
-  editor.Components.addType("custom-row", {
+  editor.Components.addType("custom-column", {
     isComponent: (el) =>
-      el.tagName === "DIV" && el.classList.contains("custom-row"),
+      el.tagName === "DIV" && el.classList.contains("custom-column"),
     // model definition
     model: {
       defaults: {
         tagName: "div",
-        attributes: { class: "custom-row" },
+        attributes: { class: "custom-column" },
         droppable: true,
         draggable: true,
-        // A row always starts with one column
+        // A column
         components: [
           //   {
           //     type: "text", // Adding a placeholder text component initially
@@ -21,9 +21,9 @@ const CustomRow = (editor) => {
         // Default styles
         style: {
           padding: "10px",
-          "background-color": "#e0f0ff",
+          "background-color": "#f0aeae",
           color: "#000000",
-          border: "5px solid #0454a8",
+          border: "5px solid #a80404",
           "border-radius": "5px",
           "font-size": "16px",
           "min-height": "50px", // Ensure it has some height initially
@@ -35,15 +35,15 @@ const CustomRow = (editor) => {
     // View definition (optional)
     view: {
       onRender() {
-        console.log("CustomRow rendered");
+        console.log("CustomColumn rendered");
       },
     },
   });
   // Add the custom component to the Block Manager
-  editor.BlockManager.add("custom-row", {
-    label: "Custom Row",
+  editor.BlockManager.add("custom-column", {
+    label: "Custom Column",
     category: "Layout",
-    content: { type: "custom-row" },
+    content: { type: "custom-column" },
   });
 };
-export default CustomRow;
+export default CustomColumn;

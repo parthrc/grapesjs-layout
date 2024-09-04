@@ -2,7 +2,7 @@ import grapesjs from "grapesjs";
 import GjsEditor, { Canvas, PagesProvider } from "@grapesjs/react";
 import "./App.css";
 import CustomRow from "./grapesjs/CustomComponents/LayoutComponents/CustomRow.jsx";
-import CustomColumns from "./grapesjs/CustomComponents/LayoutComponents/CustomCol.jsx";
+import CustomColumn from "./grapesjs/CustomComponents/LayoutComponents/CustomColumn.jsx";
 
 function App() {
   const onEditor = (editor) => {
@@ -21,7 +21,7 @@ function App() {
           src: "https://unpkg.com/grapesjs-blocks-basic",
         },
         CustomRow,
-        CustomColumns,
+        CustomColumn,
       ]}
       options={{
         height: "100vh",
