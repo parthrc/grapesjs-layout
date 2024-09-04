@@ -10,6 +10,13 @@ function App() {
     console.log("Editor loaded", { editor });
     if (editor) editor.addComponents({ type: "custom-row" });
 
+    const reloadIframe = (editor) => {
+      const iframe = editor.Canvas.getFrameEl();
+      if (iframe) {
+        iframe.contentWindow.location.reload();
+      }
+    };
+
     const handleComponentAdd = (model) => {
       const parent = model.parent();
       console.log("Parent=", parent);
@@ -37,6 +44,8 @@ function App() {
         console.log("After replacing", parent.components().models);
         // Add the event listener back
         editor.on("component:add", handleComponentAdd);
+        // force reload iframe
+        reloadIframe(editor);
       }
     };
 
