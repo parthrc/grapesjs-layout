@@ -33,15 +33,17 @@ const CustomRow = (editor) => {
       },
 
       adjustColumnWidths() {
-        console.log("adjustColumnWidths");
         const columns = this.components();
         const columnCount = columns.length;
+        console.log("adjustColumnWidths", columnCount);
         console.log("Total columns", columns);
 
         // Limit to a maximum of 4 columns
         if (columnCount > 4) {
+          console.log("Inside columns are more than 4");
           // Remove columns added after the 4th
           for (let i = columnCount - 1; i >= 4; i--) {
+            console.log("Column at ", i, " is ", columns.at(i));
             columns.at(i).remove();
           }
         }
@@ -49,6 +51,7 @@ const CustomRow = (editor) => {
         // Wrap any new components in columns
         columns.each((column, index) => {
           console.log("Each column=", column);
+          console.log("Each column=", column.attributes.type);
           const currentStyle = column.getStyle();
           if (index < 4) {
             column.setStyle({
@@ -57,17 +60,17 @@ const CustomRow = (editor) => {
             });
 
             // Ensure that any direct children are wrapped in a custom-column
-            const childComponents = column.components();
-            childComponents.each((child) => {
-              //   console.log("Child type=", child.get("type"));
-              if (child.get("type") !== "custom-column") {
-                column.append({
-                  type: "custom-column",
-                  components: [child.clone()],
-                });
-                child.remove();
-              }
-            });
+            // const childComponents = column.components();
+            // childComponents.each((child) => {
+            //   //   console.log("Child type=", child.get("type"));
+            //   if (child.get("type") !== "custom-column") {
+            //     column.append({
+            //       type: "custom-column",
+            //       components: [child.clone()],
+            //     });
+            //     child.remove();
+            //   }
+            // });
           }
         });
       },
